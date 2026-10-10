@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "nerfs-o-plenty",
+	"version": "${version}",
+	"name": "Nerfs O' Plenty",
+	"description": "Nerfs your gameplay. For fun!",
+	"authors": [
+		"DevCmb"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/nerfs-o-plenty/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "xyz.devcmb.nerfsoplenty.NerfsOPlenty",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"nerfs-o-plenty.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.1.2",
+		"java": ">=25",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}
