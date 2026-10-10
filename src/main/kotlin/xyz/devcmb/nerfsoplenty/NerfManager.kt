@@ -13,10 +13,10 @@ object NerfManager {
 
     val nerfs: ArrayList<NerfEntry> = ArrayList()
 
-    private var activeNerf: Nerf? = null
-    private var activeNerfID: Identifier? = null
+    var activeNerf: Nerf? = null
+    var activeNerfID: Identifier? = null
 
-    @JvmField val NONE = register("none", EmptyNerf("None"))
+    @JvmField val NONE = register("none", EmptyNerf("None", false))
     @JvmField val NO_CROSSHAIR = register("no_crosshair", EmptyNerf("No Crosshair"))
     @JvmField val THIRTY_FOV = register("30_fov", EmptyNerf("30 FOV"))
     @JvmField val NO_HOTBAR = register("no_hotbar", EmptyNerf("No Hotbar"))
@@ -28,6 +28,13 @@ object NerfManager {
     @JvmField val YAWN_SENSITIVITY = register("yawn_sensitivity", EmptyNerf("Yawn Sensitivity"))
     @JvmField val TEN_FPS = register("10_fps", EmptyNerf("10 FPS"))
     @JvmField val NO_JUMPING = register("no_jumping", EmptyNerf("No Jumping"))
+    @JvmField val FORCED_THIRD_PERSON = register("forced_third_person", ForcedThirdPersonNerf())
+    @JvmField val FORCED_REVERSE_THIRD_PERSON = register("forced_reverse_third_person", ForcedReverseThirdPersonNerf())
+    @JvmField val INVERTED_MOUSE = register("inverted_mouse", EmptyNerf("Inverted Mouse"))
+    @JvmField val TWO_HUNDRED_PERCENT_FOV_EFFECTS = register("200_percent_fov_effects", EmptyNerf("200% FOV Effects"))
+    @JvmField val ONE_FIFTY_PERCENT_DAMAGE_TILT = register("150_percent_damage_tilt", EmptyNerf("150% Damage Tilt"))
+    @JvmField val INVERTED_CONTROLS = register("inverted_controls", EmptyNerf("Inverted Controls"))
+    @JvmField val SHUFFLED_HOTBAR = register("shuffled_hotbar", ShuffledHotbarNerf())
 
     fun init() {
         nerfs.forEach {

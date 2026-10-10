@@ -17,4 +17,13 @@ public class MouseHandlerMixin {
         if(NerfManager.INSTANCE.isActive(NerfManager.YAWN_SENSITIVITY)) return 0.0;
         return original;
     }
+
+    @ModifyExpressionValue(
+        method = "turnPlayer",
+        // needs to modify 2 calls so we can't specify an ordinal unless we want repeated logic
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/OptionInstance;get()Ljava/lang/Object;")
+    )
+    private Object invertMouse(Object original) {
+        return original instanceof Boolean && NerfManager.INSTANCE.isActive(NerfManager.INVERTED_MOUSE) ? true : original;
+    }
 }

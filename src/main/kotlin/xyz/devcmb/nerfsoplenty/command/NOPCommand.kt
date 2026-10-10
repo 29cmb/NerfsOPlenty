@@ -10,7 +10,21 @@ import xyz.devcmb.nerfsoplenty.NerfManager
 object NOPCommand {
     fun register(dispatcher: CommandDispatcher<FabricClientCommandSource>) {
         Command("nerfsoplenty") {
-            literal("nerf") {
+            literal("random") {
+                executes { ctx ->
+                    val chosenNerf = NerfManager.REGISTRY.entrySet().filter { it.value.listed }.random()
+                    val activatedNerf = NerfManager.activateNerf(chosenNerf.key.identifier())
+                    ctx.source.sendFeedback(
+                        Component.empty()
+                            .append(Component.literal("Activated nerf "))
+                            .append(Component.literal(activatedNerf.name).withStyle(ChatFormatting.WHITE))
+                            .append(Component.literal("!"))
+                            .withStyle(ChatFormatting.GREEN)
+                    )
+                }
+            }
+
+            literal("activate") {
                 argument("id", NerfArgument) {
                     executes { ctx ->
                         val id = ctx.getArgument("id", Identifier::class.java)

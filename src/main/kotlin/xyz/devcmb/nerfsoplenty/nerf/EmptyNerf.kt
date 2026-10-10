@@ -7,4 +7,4 @@ package xyz.devcmb.nerfsoplenty.nerf
  *
  * Ex: Useful for when you're modifying render state in a mixin
  */
-class EmptyNerf(name: String) : Nerf(name)
+class EmptyNerf(name: String, listed: Boolean = true) : Nerf(name, listed)
