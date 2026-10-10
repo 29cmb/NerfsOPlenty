@@ -4,7 +4,11 @@
 	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"GuiMixin",
-		"CameraMixin"
+		"CameraMixin",
+		"MinecraftMixin",
+		"MouseHandlerMixin",
+		"FramerateLimitTrackerMixin",
+		"LocalPlayerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

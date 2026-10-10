@@ -14,10 +14,13 @@ object NOPCommand {
                 argument("id", NerfArgument) {
                     executes { ctx ->
                         val id = ctx.getArgument("id", Identifier::class.java)
-                        NerfManager.activateNerf(id)
+                        val activatedNerf = NerfManager.activateNerf(id)
 
                         ctx.source.sendFeedback(
-                            Component.literal("Activated nerf successfully")
+                            Component.empty()
+                                .append(Component.literal("Activated nerf "))
+                                .append(Component.literal(activatedNerf.name).withStyle(ChatFormatting.WHITE))
+                                .append(Component.literal(" successfully!"))
                                 .withStyle(ChatFormatting.GREEN)
                         )
                     }

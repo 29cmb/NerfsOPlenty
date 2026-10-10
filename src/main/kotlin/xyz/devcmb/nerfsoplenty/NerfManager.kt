@@ -4,8 +4,7 @@ import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.minecraft.core.Registry
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import xyz.devcmb.nerfsoplenty.nerf.EmptyNerf
-import xyz.devcmb.nerfsoplenty.nerf.Nerf
+import xyz.devcmb.nerfsoplenty.nerf.*
 
 @Suppress("unused")
 object NerfManager {
@@ -17,12 +16,22 @@ object NerfManager {
     private var activeNerf: Nerf? = null
     private var activeNerfID: Identifier? = null
 
-    @JvmField val NONE = register("none", EmptyNerf())
-    @JvmField val NO_CURSOR = register("no_cursor", EmptyNerf())
-    @JvmField val THIRTY_FOV = register("30_fov", EmptyNerf())
+    @JvmField val NONE = register("none", EmptyNerf("None"))
+    @JvmField val NO_CROSSHAIR = register("no_crosshair", EmptyNerf("No Crosshair"))
+    @JvmField val THIRTY_FOV = register("30_fov", EmptyNerf("30 FOV"))
+    @JvmField val NO_HOTBAR = register("no_hotbar", EmptyNerf("No Hotbar"))
+    @JvmField val NO_HEALTH_BAR = register("no_healthbar", EmptyNerf("No Healthbar"))
+    @JvmField val NO_HUD = register("no_hud", NoHudNerf())
+    @JvmField val NO_SWORD = register("no_sword", EmptyNerf("No Sword"))
+    @JvmField val NO_BOW = register("no_bow", NoBowNerf())
+    @JvmField val HYPERSPEED_SENSITIVITY = register("hyperspeed_sensitivity", EmptyNerf("Hyperspeed Sensitivity"))
+    @JvmField val YAWN_SENSITIVITY = register("yawn_sensitivity", EmptyNerf("Yawn Sensitivity"))
+    @JvmField val TEN_FPS = register("10_fps", EmptyNerf("10 FPS"))
+    @JvmField val NO_JUMPING = register("no_jumping", EmptyNerf("No Jumping"))
 
     fun init() {
         nerfs.forEach {
+            it.nerf.init()
             Registry.register(
                 REGISTRY,
                 it.id,
@@ -37,20 +46,24 @@ object NerfManager {
         return identifier
     }
 
-    fun activateNerf(id: Identifier) {
+    fun activateNerf(id: Identifier): Nerf {
         clearNerf()
 
         require(REGISTRY.containsKey(id)) { "Attempted to activate a nerf without an entry in the registry" }
 
         val nerf = REGISTRY.getValue(id)
         nerf.activate()
+        nerf.isActive = true
 
         activeNerf = nerf
         activeNerfID = id
+
+        return nerf
     }
 
     fun clearNerf() {
         activeNerf?.deactivate()
+        activeNerf?.isActive = false
         activeNerf = null
         activeNerfID = null
     }

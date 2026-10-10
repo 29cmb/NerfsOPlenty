@@ -1,9 +1,12 @@
 package xyz.devcmb.nerfsoplenty.nerf
 
 /**
- * An interface for all Nerf classes
+ * A superclass for all Nerfs
  */
-interface Nerf {
-    fun activate()
-    fun deactivate()
+abstract class Nerf(val name: String) {
+    var isActive: Boolean = false
+
+    open fun init() {}
+    open fun activate() {}
+    open fun deactivate() {}
 }
