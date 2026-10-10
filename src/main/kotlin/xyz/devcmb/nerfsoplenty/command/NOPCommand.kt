@@ -1,10 +1,8 @@
 package xyz.devcmb.nerfsoplenty.command
 
 import com.mojang.brigadier.CommandDispatcher
-import com.mojang.brigadier.exceptions.SimpleCommandExceptionType
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
-import net.minecraft.commands.SharedSuggestionProvider
-import net.minecraft.commands.arguments.IdentifierArgument
+import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import xyz.devcmb.nerfsoplenty.NerfManager
@@ -17,8 +15,22 @@ object NOPCommand {
                     executes { ctx ->
                         val id = ctx.getArgument("id", Identifier::class.java)
                         NerfManager.activateNerf(id)
-                        ctx.source.sendFeedback(Component.literal("Activated nerf successfully"))
+
+                        ctx.source.sendFeedback(
+                            Component.literal("Activated nerf successfully")
+                                .withStyle(ChatFormatting.GREEN)
+                        )
                     }
+                }
+            }
+
+            literal("clear") {
+                executes { ctx ->
+                    NerfManager.clearNerf()
+                    ctx.source.sendFeedback(
+                        Component.literal("Cleared nerf successfully")
+                            .withStyle(ChatFormatting.GREEN)
+                    )
                 }
             }
         }.register(dispatcher)

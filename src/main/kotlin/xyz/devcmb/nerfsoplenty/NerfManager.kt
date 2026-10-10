@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceKey
 import xyz.devcmb.nerfsoplenty.nerf.EmptyNerf
 import xyz.devcmb.nerfsoplenty.nerf.Nerf
 
+@Suppress("unused")
 object NerfManager {
     val NERF_REGISTRY_KEY: ResourceKey<Registry<Nerf>> = ResourceKey.createRegistryKey(NerfsOPlenty.id("nerfs"))
     val REGISTRY = FabricRegistryBuilder.createDefaulted(NERF_REGISTRY_KEY, NerfsOPlenty.id("none")).buildAndRegister()
@@ -28,8 +29,6 @@ object NerfManager {
                 it.nerf
             )
         }
-
-
     }
 
     fun register(id: String, nerf: Nerf) : Identifier {
@@ -39,9 +38,7 @@ object NerfManager {
     }
 
     fun activateNerf(id: Identifier) {
-        activeNerf?.deactivate()
-        activeNerf = null
-        activeNerfID = null
+        clearNerf()
 
         require(REGISTRY.containsKey(id)) { "Attempted to activate a nerf without an entry in the registry" }
 
@@ -50,6 +47,12 @@ object NerfManager {
 
         activeNerf = nerf
         activeNerfID = id
+    }
+
+    fun clearNerf() {
+        activeNerf?.deactivate()
+        activeNerf = null
+        activeNerfID = null
     }
 
     fun isActive(identifier: Identifier): Boolean {
